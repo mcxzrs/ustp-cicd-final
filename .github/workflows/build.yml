@@ -2,7 +2,7 @@ name: CI Build
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "task4" ]
   pull_request:
     branches: [ "main" ]
 
@@ -24,3 +24,10 @@ jobs:
 
       - name: Run Build
         run: npm run build # Vite's production build command
+
+      - name: Upload Build Artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: web-application
+          path: dist/
+          if-no-files-found: error
