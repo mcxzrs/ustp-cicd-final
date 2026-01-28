@@ -1,0 +1,18 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"            # where your package.json is
+    schedule:
+      interval: "weekly"
+      day: "monday"
+      time: "09:00"
+      timezone: "Europe/Vienna"
+
+    # One combined PR instead of many
+    groups:
+      all-dependencies:
+        patterns:
+          - "*"
+
+    # Optional but usually nice:
+    open-pull-requests-limit: 1
