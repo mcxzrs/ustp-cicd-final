@@ -1,0 +1,41 @@
+name: Spell Check
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  spellcheck:
+    name: Spell Check Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Create temporary CSpell configuration
+        run: |
+          echo '{
+            "version": "0.2",
+            "language": "en",
+            "words": [
+              "vscode",
+              "tailwindcss",
+              "vitest",
+              "lucide",
+              "radixui",
+              "sonner",
+              "clsx",
+              "ustp",
+              "github",
+              "mcxzrs",
+              "cicd",
+              "opensource"
+            ]
+          }' > .cspell-temp.json
+
+      - name: Run CSpell
+        uses: streetsidesoftware/cspell-action@v6
+        with:
+          files: "**/*.md"
+          incremental_files_only: false
+          config: ".cspell-temp.json"
