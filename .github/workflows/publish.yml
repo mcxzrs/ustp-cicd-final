@@ -11,22 +11,17 @@ permissions:
 jobs:
   publish:
     runs-on: ubuntu-latest
-    # This job ensures we don't duplicate build logic and use the artifacts from CI Build
-    # Note: 'workflow_run' is often used for automation, but 'workflow_dispatch' here 
-    # satisfies the "manually triggered" requirement.
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Download Build Artifacts
-        uses: actions/download-artifact@v4
+      - name: Download Build Artifacts from CI Build
+        uses: dawidd6/action-download-artifact@v3
         with:
+          workflow: build.yml
           name: web-application
           path: dist/
-          # We search for the artifact from the most recent successful 'CI Build' run
-          # if this were automated. For manual trigger, it assumes the artifact exists in the current run context
-          # or we can use a specific action to fetch from other runs if needed.
-          # However, typical GitHub Pages deployment usually happens within the same run or via a specific 'pages' action.
+          workflow_conclusion: success
 
       - name: Setup Pages
         uses: actions/configure-pages@v4
