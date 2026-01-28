@@ -12,25 +12,29 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
+      - name: Create temporary CSpell configuration
+        run: |
+          echo '{
+            "version": "0.2",
+            "language": "en",
+            "words": [
+              "vscode",
+              "tailwindcss",
+              "vitest",
+              "lucide",
+              "radixui",
+              "sonner",
+              "clsx",
+              "ustp",
+              "github",
+              "mcxzrs",
+              "cicd"
+            ]
+          }' > .cspell-temp.json
+
       - name: Run CSpell
         uses: streetsidesoftware/cspell-action@v6
         with:
           files: "**/*.md"
           incremental_files_only: false
-          # Configuration is defined inline to avoid creating extra files
-          config: |
-            {
-              "words": [
-                "vscode",
-                "tailwindcss",
-                "vitest",
-                "lucide",
-                "radixui",
-                "sonner",
-                "clsx",
-                "ustp",
-                "github",
-                "mcxzrs",
-                "cicd"
-              ]
-            }
+          config: ".cspell-temp.json"
