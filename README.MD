@@ -36,7 +36,7 @@ npm run build
 
 #### Badges:
 
-[!\[CI Build](https://github.com/mcxzrs/ustp-cicd-final/actions/workflows/build.yml/badge.svg?event=push)](https://github.com/mcxzrs/ustp-cicd-final/actions/workflows/build.yml)
+[![CI Build](https://github.com/mcxzrs/ustp-cicd-final/actions/workflows/build.yml/badge.svg)](https://github.com/mcxzrs/ustp-cicd-final/actions/workflows/build.yml)
 [![Publish to GitHub Pages](https://github.com/mcxzrs/ustp-cicd-final/actions/workflows/publish.yml/badge.svg)](https://github.com/mcxzrs/ustp-cicd-final/actions/workflows/publish.yml)
 [![Release](https://github.com/mcxzrs/ustp-cicd-final/actions/workflows/release.yml/badge.svg)](https://github.com/mcxzrs/ustp-cicd-final/actions/workflows/release.yml)
-
+[![codecov](https://codecov.io/github/mcxzrs/ustp-cicd-final/graph/badge.svg?token=XINRSCF4GI)](https://codecov.io/github/mcxzrs/ustp-cicd-final)
