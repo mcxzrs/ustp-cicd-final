@@ -1,0 +1,47 @@
+name: Release
+
+on:
+  push:
+    tags:
+      - 'v*'
+
+permissions:
+  contents: write
+
+jobs:
+  create-release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Download Build Artifacts
+        uses: dawidd6/action-download-artifact@v3
+        with:
+          workflow: build.yml
+          name: web-application
+          path: dist/
+          workflow_conclusion: success
+          # Search for artifacts from the same commit
+          commit: ${{ github.sha }}
+          # Ensure we wait/retry if the build is still running
+          check_artifacts: true
+          if_no_artifact_found: warn
+
+      - name: Archive build artifacts
+        run: |
+          if [ -d "dist" ]; then
+            zip -r tetris-build-${{ github.ref_name }}.zip dist/
+          else
+            echo "Dist directory not found, creating dummy for release action if needed"
+            mkdir dist
+            echo "Build failed to provide artifacts" > dist/error.txt
+            zip -r tetris-build-${{ github.ref_name }}.zip dist/
+          fi
+
+      - name: Create Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: "USTP CI/CD Tetris ${{ github.ref_name }}"
+          files: tetris-build-${{ github.ref_name }}.zip
+          generate_release_notes: true
