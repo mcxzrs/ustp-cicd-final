@@ -1,0 +1,36 @@
+name: Spell Check
+
+on:
+  pull_request:
+    branches: [ "main" ]
+
+jobs:
+  spellcheck:
+    name: Spell Check Markdown
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4
+
+      - name: Run CSpell
+        uses: streetsidesoftware/cspell-action@v6
+        with:
+          files: "**/*.md"
+          incremental_files_only: false
+          # Configuration is defined inline to avoid creating extra files
+          config: |
+            {
+              "words": [
+                "vscode",
+                "tailwindcss",
+                "vitest",
+                "lucide",
+                "radixui",
+                "sonner",
+                "clsx",
+                "ustp",
+                "github",
+                "mcxzrs",
+                "cicd"
+              ]
+            }
